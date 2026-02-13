@@ -19,7 +19,38 @@ namespace _2026_roomreserve_backend.Controllers
             _context = context;
         }
 
-        // PATCH: api/borrowings/{id}/cancel
+        // PATCH: api/borrowings/{id}/status
+        [HttpPatch("{id}/status")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateStatusRequest request)
+        {
+            var borrowing = await _context.Borrowings.FirstOrDefaultAsync(b => b.Id == id);
+            if (borrowing == null)
+                return NotFound(new { message = "Peminjaman tidak ditemukan" });
+
+            if (borrowing.Status != "Pending")
+                return BadRequest(new { message = "Status hanya bisa diubah jika masih Pending" });
+
+            if (request.Status == "Approved")
+            {
+                borrowing.Status = "Approved";
+                borrowing.RejectReason = null;
+            }
+            else if (request.Status == "Rejected")
+            {
+                borrowing.Status = "Rejected";
+                borrowing.RejectReason = request.RejectReason;
+            }
+            else
+            {
+                return BadRequest(new { message = "Status tidak valid" });
+            }
+
+            borrowing.UpdatedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Status peminjaman berhasil diupdate" });
+        }
         [HttpPatch("{id}/cancel")]
         [Authorize]
         public async Task<IActionResult> Cancel(int id)
@@ -137,6 +168,35 @@ namespace _2026_roomreserve_backend.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = borrowing.Id },
                 new { message = "Pengajuan peminjaman berhasil!", borrowing.Id });
+        }
+
+        // GET: api/borrowings
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<IEnumerable<BorrowingResponse>>> GetAllBorrowings()
+        {
+            var borrowings = await _context.Borrowings
+                .Include(b => b.Room)
+                .OrderByDescending(b => b.BorrowDate)
+                .ThenByDescending(b => b.StartTime)
+                .Select(b => new BorrowingResponse
+                {
+                    Id = b.Id,
+                    RoomId = b.RoomId,
+                    RoomName = b.Room.Name,
+                    RoomLocation = b.Room.Location,
+                    UserId = b.UserId,
+                    Purpose = b.Purpose,
+                    BorrowDate = b.BorrowDate,
+                    StartTime = b.StartTime,
+                    EndTime = b.EndTime,
+                    Status = b.Status,
+                    RejectReason = b.RejectReason,
+                    CreatedAt = b.CreatedAt
+                })
+                .ToListAsync();
+
+            return Ok(borrowings);
         }
 
         // GET: api/borrowings/me
