@@ -177,6 +177,7 @@ namespace _2026_roomreserve_backend.Controllers
         {
             var borrowings = await _context.Borrowings
                 .Include(b => b.Room)
+                .Include(b => b.User)
                 .OrderByDescending(b => b.BorrowDate)
                 .ThenByDescending(b => b.StartTime)
                 .Select(b => new BorrowingResponse
@@ -192,7 +193,9 @@ namespace _2026_roomreserve_backend.Controllers
                     EndTime = b.EndTime,
                     Status = b.Status,
                     RejectReason = b.RejectReason,
-                    CreatedAt = b.CreatedAt
+                    CreatedAt = b.CreatedAt,
+                    BorrowerName = b.User.FullName,
+                    BorrowerEmail = b.User.Email
                 })
                 .ToListAsync();
 
@@ -210,6 +213,7 @@ namespace _2026_roomreserve_backend.Controllers
 
             var borrowings = await _context.Borrowings
                 .Include(b => b.Room)
+                .Include(b => b.User)
                 .Where(b => b.UserId == userId)
                 .OrderByDescending(b => b.BorrowDate)
                 .ThenByDescending(b => b.StartTime)
@@ -226,7 +230,9 @@ namespace _2026_roomreserve_backend.Controllers
                     EndTime = b.EndTime,
                     Status = b.Status,
                     RejectReason = b.RejectReason,
-                    CreatedAt = b.CreatedAt
+                    CreatedAt = b.CreatedAt,
+                    BorrowerName = b.User.FullName,
+                    BorrowerEmail = b.User.Email
                 })
                 .ToListAsync();
 
@@ -242,7 +248,7 @@ namespace _2026_roomreserve_backend.Controllers
             if (userIdClaim == null || !int.TryParse(userIdClaim, out var userId))
                 return Unauthorized(new { message = "Token tidak valid" });
 
-            var b = await _context.Borrowings.Include(x => x.Room).FirstOrDefaultAsync(x => x.Id == id);
+            var b = await _context.Borrowings.Include(x => x.Room).Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
             if (b == null)
                 return NotFound(new { message = "Peminjaman tidak ditemukan" });
 
@@ -262,7 +268,9 @@ namespace _2026_roomreserve_backend.Controllers
                 EndTime = b.EndTime,
                 Status = b.Status,
                 RejectReason = b.RejectReason,
-                CreatedAt = b.CreatedAt
+                CreatedAt = b.CreatedAt,
+                BorrowerName = b.User.FullName,
+                BorrowerEmail = b.User.Email
             };
 
             return Ok(resp);
