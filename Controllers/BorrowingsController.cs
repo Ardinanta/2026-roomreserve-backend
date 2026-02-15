@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using _2026_roomreserve_backend.Data;
-using _2026_roomreserve_backend.DTOs.Borrowing;
-using _2026_roomreserve_backend.Models;
+using RoomReserve.Api.Data;
+using RoomReserve.Api.DTOs.Borrowing;
+using RoomReserve.Api.Models;
 
-namespace _2026_roomreserve_backend.Controllers
+namespace RoomReserve.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

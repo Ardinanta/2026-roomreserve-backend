@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace _2026_roomreserve_backend.Models
+namespace RoomReserve.Api.Models
 {
     [Table("Borrowings")]
     public class Borrowing

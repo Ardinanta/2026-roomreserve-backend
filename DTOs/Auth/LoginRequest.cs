@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace _2026_roomreserve_backend.DTOs.Auth
+namespace RoomReserve.Api.DTOs.Auth
 {
     public class LoginRequest
     {

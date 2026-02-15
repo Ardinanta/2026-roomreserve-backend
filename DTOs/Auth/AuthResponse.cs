@@ -1,4 +1,4 @@
-namespace _2026_roomreserve_backend.DTOs.Auth
+namespace RoomReserve.Api.DTOs.Auth
 {
     public class AuthResponse
     {

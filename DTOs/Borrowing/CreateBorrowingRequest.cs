@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace _2026_roomreserve_backend.DTOs.Borrowing
+namespace RoomReserve.Api.DTOs.Borrowing
 {
 	public class CreateBorrowingRequest
 	{

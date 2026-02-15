@@ -1,4 +1,4 @@
-namespace _2026_roomreserve_backend.DTOs.Room
+namespace RoomReserve.Api.DTOs.Room
 {
     public class RoomResponse
     {
