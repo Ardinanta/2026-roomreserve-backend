@@ -1,6 +1,0 @@
-@_2026_roomreserve_backend_HostAddress = http://localhost:5122
-
-GET {{_2026_roomreserve_backend_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

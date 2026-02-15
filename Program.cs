@@ -2,7 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using _2026_roomreserve_backend.Data;
+using RoomReserve.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

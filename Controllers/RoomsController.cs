@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using _2026_roomreserve_backend.Data;
-using _2026_roomreserve_backend.Models;
-using _2026_roomreserve_backend.DTOs.Room;
+using RoomReserve.Api.Data;
+using RoomReserve.Api.Models;
+using RoomReserve.Api.DTOs.Room;
 
-namespace _2026_roomreserve_backend.Controllers
+namespace RoomReserve.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

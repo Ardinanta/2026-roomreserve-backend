@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using _2026_roomreserve_backend.Models;
+using RoomReserve.Api.Models;
 
-namespace _2026_roomreserve_backend.Data
+namespace RoomReserve.Api.Data
 {
     public class AppDbContext : DbContext
     {
