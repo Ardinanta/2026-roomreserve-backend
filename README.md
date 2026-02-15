@@ -13,6 +13,17 @@ Backend ini menyediakan REST API untuk:
 
 ---
 
+## Fitur
+- Registrasi & login user
+- CRUD peminjaman ruangan
+- Approval & tracking status peminjaman
+- Manajemen data ruangan
+- Manajemen user (admin)
+- Riwayat status peminjaman
+- Otentikasi JWT
+
+---
+
 ## Teknologi
 - ASP.NET Core Web API
 - Entity Framework Core
